@@ -9,6 +9,8 @@ class Categoria extends Model
 
     protected $table = "categorias.categorias";
 
+    protected $fillable = ['nome', 'descricao', 'user_id'];
+
     protected function subcategorias(){
         $this->hasMany(Subcategoria::class);
     }

@@ -8,5 +8,7 @@ use App\Http\Requests;
 
 class ContatoController extends Controller
 {
-    //
+    public function index() {
+
+    }
 }

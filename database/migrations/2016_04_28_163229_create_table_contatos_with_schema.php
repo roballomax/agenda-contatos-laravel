@@ -22,8 +22,8 @@ class CreateTableContatosWithSchema extends Migration
             $table->string('email', 254);
             $table->text("descricao")->nullable();
             $table->string('foto', 11)->nullable();
-            $table->integer('subcategoria_id')->index()->unsigned()->foreign()->references('id')->on('categorias.subcategorias');
-            $table->integer('user_id')->index()->unsigned()->foreign()->references('id')->on('users');
+            $table->integer('subcategoria_id')->index()->unsigned()->foreign()->references('id')->on('categorias.subcategorias')->onDelete('cascade');
+            $table->integer('user_id')->index()->unsigned()->foreign()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

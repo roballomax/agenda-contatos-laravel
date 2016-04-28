@@ -19,6 +19,7 @@ class CreateTableCategoriasWithSchema extends Migration
             $table->increments('id');
             $table->string("nome", 254);
             $table->text('descricao')->nullable();
+            $table->integer('user_id')->index()->unsigned()->foreign()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

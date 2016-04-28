@@ -14,8 +14,8 @@ class CreateTablePermissoesUsers extends Migration
     {
         Schema::create('permissoes.permissoes_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("permissao_id")->index()->unsigned()->foreign()->references('id')->on('permissoes.permissoes');
-            $table->integer("user_id")->index()->unsigned()->foreign()->references('id')->on('user');
+            $table->integer("permissao_id")->index()->unsigned()->foreign()->references('id')->on('permissoes.permissoes')->onDelete('cascade');
+            $table->integer("user_id")->index()->unsigned()->foreign()->references('id')->on('user')->onDelete('cascade');
             $table->timestamps();
         });
     }
