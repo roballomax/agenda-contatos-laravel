@@ -21,8 +21,9 @@ class CreateTableContatosWithSchema extends Migration
             $table->string('nome', 254);
             $table->string('email', 254);
             $table->text("descricao")->nullable();
-            $table->string('foto', 11)->nullable();
-            $table->integer('subcategoria_id')->index()->unsigned()->foreign()->references('id')->on('categorias.subcategorias')->onDelete('cascade');
+            $table->string('foto', 254)->nullable();
+            $table->integer('categoria_id')->index()->unsigned()->foreign()->references('id')->on('categorias.categorias')->onDelete('set null')->nullable();
+            $table->integer('subcategoria_id')->index()->unsigned()->foreign()->references('id')->on('categorias.subcategorias')->onDelete('set null')->nullable();
             $table->integer('user_id')->index()->unsigned()->foreign()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
@@ -35,6 +36,6 @@ class CreateTableContatosWithSchema extends Migration
      */
     public function down()
     {
-        Schema::drop('contatos.contatos');
+        Schema::dropIfExists('contatos.contatos');
     }
 }

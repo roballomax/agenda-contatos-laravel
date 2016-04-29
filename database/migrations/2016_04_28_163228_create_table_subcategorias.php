@@ -19,6 +19,65 @@ class CreateTableSubcategorias extends Migration
             $table->integer('user_id')->index()->unsigned()->foreign()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
+
+        /*
+         * Subcategorias para Família
+         */
+
+        \App\Subcategoria::create([
+            'nome' => 'Irmãos',
+            'categoria_id' => 1,
+            'user_id' => 1
+        ]);
+        \App\Subcategoria::create([
+            'nome' => 'Primos',
+            'categoria_id' => 1,
+            'user_id' => 1
+        ]);
+        \App\Subcategoria::create([
+            'nome' => 'Tios',
+            'categoria_id' => 1,
+            'user_id' => 1
+        ]);
+
+        /*
+         * Subcategorias para Amigos
+         */
+        \App\Subcategoria::create([
+            'nome' => 'Faculdade',
+            'categoria_id' => 2,
+            'user_id' => 1
+        ]);
+        \App\Subcategoria::create([
+            'nome' => 'Infância',
+            'categoria_id' => 2,
+            'user_id' => 1
+        ]);
+        \App\Subcategoria::create([
+            'nome' => 'Conhecidos',
+            'categoria_id' => 2,
+            'user_id' => 1
+        ]);
+
+        /*
+         * Sibcategorias para Trabalho
+         */
+        \App\Subcategoria::create([
+            'nome' => 'Meu Setor',
+            'categoria_id' => 3,
+            'user_id' => 1
+        ]);
+        \App\Subcategoria::create([
+            'nome' => 'Conhecidos',
+            'categoria_id' => 3,
+            'user_id' => 1
+        ]);
+        \App\Subcategoria::create([
+            'nome' => 'Happy Hour',
+            'categoria_id' => 3,
+            'user_id' => 1
+        ]);
+
     }
 
     /**
@@ -28,6 +87,6 @@ class CreateTableSubcategorias extends Migration
      */
     public function down()
     {
-        Schema::drop('categorias.subcategorias');
+        Schema::dropIfExists('categorias.subcategorias');
     }
 }

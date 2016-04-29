@@ -22,6 +22,25 @@ class CreateTableCategoriasWithSchema extends Migration
             $table->integer('user_id')->index()->unsigned()->foreign()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
+
+        \App\Categoria::create([
+            'nome' => 'Família',
+            'descricao' => 'Integrantes da minha família.',
+            'user_id' => 1
+        ]);
+
+        \App\Categoria::create([
+            'nome' => 'Amigos',
+            'descricao' => 'Amigos pessoais.',
+            'user_id' => 1
+        ]);
+
+        \App\Categoria::create([
+            'nome' => 'Trabalho',
+            'descricao' => 'Pessoal do trabalho.',
+            'user_id' => 1
+        ]);
+
     }
 
     /**
@@ -31,6 +50,9 @@ class CreateTableCategoriasWithSchema extends Migration
      */
     public function down()
     {
-        Schema::drop('categorias.categorias');
+        $sql = "CREATE SCHEMA IF NOT EXISTS categorias;";
+        DB::connection()->getPdo()->exec($sql);
+
+        Schema::dropIfExists('categorias.categorias');
     }
 }

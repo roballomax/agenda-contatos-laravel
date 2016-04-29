@@ -20,6 +20,19 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        \App\User::create([
+            'name' => 'roballomax',
+            'email' => 'roballomax@roballomax.com',
+            'password' => bcrypt('roballomax')
+        ]);
+
+        \App\User::create([
+            'name' => 'Maximiliano Roballo',
+            'email' => 'maximilianoroballo@gmail.com',
+            'password' => bcrypt('roballomax')
+        ]);
+
     }
 
     /**
@@ -29,6 +42,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::dropIfExists('users');
     }
 }

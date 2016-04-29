@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
 
 class Subcategoria extends Model
 {
@@ -11,11 +11,18 @@ class Subcategoria extends Model
 
     protected $fillable = ['nome', 'categoria_id', 'user_id'];
 
+//    protected static function lista_subcategorias_user($categoria_id){
+//        return Subcategoria::where('categoria_id', $categoria_id)
+//            ->whereIn('user_id', [1, Auth::user()->id])
+//            ->orderBy('nome', 'asc')
+//            ->get();
+//    }
+
     protected function categoria(){
         return $this->belongsTo(Categoria::class);
     }
 
     protected function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(\Illuminate\Foundation\Auth\User::class);
     }
 }
