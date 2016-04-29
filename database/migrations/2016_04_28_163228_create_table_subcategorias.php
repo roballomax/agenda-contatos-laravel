@@ -20,9 +20,24 @@ class CreateTableSubcategorias extends Migration
             $table->timestamps();
         });
 
+        self::valores_default();
+
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('categorias.subcategorias');
+    }
+
+    private function valores_default(){
         /*
-         * Subcategorias para Família
-         */
+        * Subcategorias para Família
+        */
 
         \App\Subcategoria::create([
             'nome' => 'Irmãos',
@@ -77,16 +92,6 @@ class CreateTableSubcategorias extends Migration
             'categoria_id' => 3,
             'user_id' => 1
         ]);
-
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('categorias.subcategorias');
-    }
 }

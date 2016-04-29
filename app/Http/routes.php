@@ -37,3 +37,8 @@ Route::get('/subcategorias/delete/{subcategoria}', 'SubcategoriaController@delet
 
 //Rotas de usuarios
 Route::get('/users', 'UserController@index');
+Route::post('/users/add', 'UserController@add');
+Route::get('/users/{user}/edit', 'UserController@edit');
+Route::patch('/users/update/{user}/', 'UserController@update');
+Route::get('/users/delete/{user}', 'UserController@delete');
+

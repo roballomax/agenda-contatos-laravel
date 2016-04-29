@@ -11,7 +11,9 @@
                         <div class="list-group">
                             <a href="/contatos" class="list-group-item">Gerenciar Contatos</a>
                             <a href="/categorias" class="list-group-item">Gerenciar Categorias</a>
-                            <a href="/users" class="list-group-item">Gerenciar Usuários</a>
+                            @if(Auth::user()->adm)
+                                <a href="/users" class="list-group-item">Gerenciar Usuários</a>
+                            @endif
                         </div>
                     </div>
                 </div>

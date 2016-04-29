@@ -23,6 +23,21 @@ class CreateTableCategoriasWithSchema extends Migration
             $table->timestamps();
         });
 
+        self::valores_default();
+
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('categorias.categorias');
+    }
+
+    private function valores_default(){
         \App\Categoria::create([
             'nome' => 'Família',
             'descricao' => 'Integrantes da minha família.',
@@ -40,19 +55,5 @@ class CreateTableCategoriasWithSchema extends Migration
             'descricao' => 'Pessoal do trabalho.',
             'user_id' => 1
         ]);
-
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        $sql = "CREATE SCHEMA IF NOT EXISTS categorias;";
-        DB::connection()->getPdo()->exec($sql);
-
-        Schema::dropIfExists('categorias.categorias');
     }
 }
