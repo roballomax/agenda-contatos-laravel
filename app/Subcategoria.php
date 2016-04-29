@@ -9,6 +9,8 @@ class Subcategoria extends Model
 {
     protected $table = "categorias.subcategorias";
 
+    protected $fillable = ['nome', 'categoria_id', 'user_id'];
+
     protected function categoria(){
         return $this->belongsTo(Categoria::class);
     }

@@ -5,21 +5,15 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Cadastro de Categoria</div>
+                    <div class="panel-heading">Cadastro de Subcategoria - <a href="{{url()->to('/categorias')}}">Voltar</a></div>
                     <div class="panel-body">
                         <div class="row">
-                            <form method="post" action="/categorias/add">
+                            <form method="post" action="/subcategorias/add/{{$categoria->id}}">
                                 {{csrf_field()}}
                                 <div class="form-group col-sm-10">
                                     <label class="control-label col-sm-2" for="nome">Nome:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="nome" id="nome" value="{{old('nome')}}" placeholder="Família...">
-                                    </div>
-                                </div>
-                                <div class="form-group col-sm-10">
-                                    <label class="control-label col-sm-2" for="descricao">Descroção:</label>
-                                    <div class="col-sm-10">
-                                        <textarea class="form-control" rows="5" id="descricao" name="descricao" placeholder="Integrantes da família...">{{old('descricao')}}</textarea>
+                                        <input type="text" class="form-control" name="nome" id="nome" value="{{old('nome')}}" placeholder="Irmãos...">
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-offset-2 col-sm-10">
@@ -38,16 +32,15 @@
                             </div>
                         @endif
 
-                        @if(!empty($categorias))
+                        @if(count($categoria->subcategorias) > 0)
                             <div class="row">
                                 <div class="list-group">
-                                    @foreach($categorias as $categoria)
+                                    @foreach($categoria->subcategorias as $subcategoria)
                                         <p class="list-group-item">
-                                            {{$categoria->nome}}
+                                            {{$subcategoria->nome}}
                                             <span class="pull-right">
-                                                <a href="/categorias/{{$categoria->id}}/edit">Editar</a> |
-                                                <a href="/subcategorias/{{$categoria->id}}">Subcategorias</a> |
-                                                <a href="/categorias/delete/{{$categoria->id}}">Deletar</a>
+                                                <a href="/subcategorias/{{$subcategoria->id}}/edit">Editar</a> |
+                                                <a href="/subcategorias/delete/{{$subcategoria->id}}">Deletar</a>
                                             </span>
                                         </p>
                                     @endforeach

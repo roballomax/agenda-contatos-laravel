@@ -27,5 +27,13 @@ Route::get('/categorias/delete/{categoria}', 'CategoriaController@delete');
 Route::get('/categorias/{categoria}/edit', 'CategoriaController@edit');
 Route::patch('/categorias/update/{categoria}', 'CategoriaController@update');
 
+//Rotas de Subcategoria
+Route::get('/subcategorias/{categoria}', 'SubcategoriaController@index');
+Route::post('/subcategorias/add/{categoria}', 'SubcategoriaController@add');
+Route::get('/subcategorias/{subcategoria}/edit', 'SubcategoriaController@edit');
+Route::patch('/subcategorias/update/{subcategoria}', 'SubcategoriaController@update');
+Route::get('/subcategorias/delete/{subcategoria}', 'SubcategoriaController@delete');
+
+
 //Rotas de usuarios
 Route::get('/users', 'UserController@index');
