@@ -28,7 +28,9 @@ class PermissaoController extends Controller
 
         return view('permissoes.index', [
             'user' => $user,
-            'permissoes' => Permissao::all()
+            'permissoes' => Permissao::lista_permissoes($user->id)
+
+//            'permissoes' => Permissao::all()
         ]);
     }
 

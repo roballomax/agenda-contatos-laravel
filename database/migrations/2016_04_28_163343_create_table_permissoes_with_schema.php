@@ -46,6 +46,18 @@ class CreateTablePermissoesWithSchema extends Migration
             'descricao' => 'Listar categorias'
         ]);
 
+//        \App\Permissao::create([
+//            'nome' => 'Acicionar Categorias',
+//            'url' => 'categorias/add',
+//            'descricao' => 'Adicionar categorias'
+//        ]);
+//
+//        \App\Permissao::create([
+//            'nome' => 'Acicionar Categorias',
+//            'url' => 'categorias/add',
+//            'descricao' => 'Adicionar categorias'
+//        ]);
+
 
         /****************************************************/
         \App\Permissao::create([

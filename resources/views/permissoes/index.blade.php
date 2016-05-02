@@ -11,12 +11,12 @@
                             <form method="post" action="/permissoes/add/{{$user->id}}">
                                 {{csrf_field()}}
                                 @foreach($permissoes as $permissao)
-                                    <div class="form-group col-sm-10">
+                                    <div class="form-group col-sm-10" title="{{$permissao->descricao}}">
                                         <label class="control-label col-sm-2" for="{{$permissao->id}}">{{$permissao->nome}}</label>
                                         <div class="col-sm-10">
                                             <select name="{{$permissao->id}}" class="form-control" id="{{$permissao->id}}">
                                                 <option value="true">TRUE</option>
-                                                <option value="false">FALSE</option>
+                                                <option value="false" {{($permissao->selected ? 'selected' : '')}}>FALSE</option>
                                             </select>
                                         </div>
                                     </div>
