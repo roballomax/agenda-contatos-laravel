@@ -25,6 +25,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-10">
+                                    <label class="control-label col-sm-2" for="email">Telefone:</label>
+                                    <div class="col-sm-10">
+                                        <input type="tel" class="form-control" name="telefone" id="telefone" value="{{$contato->telefone}}" placeholder="{{"(48) 0000-0000"}}">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-10">
                                     <label class="control-label col-sm-2" for="categoria">Categoria:</label>
                                     <div class="col-sm-10">
                                         <select name="categoria_id" id="categoria" class="form-control">

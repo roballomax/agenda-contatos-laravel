@@ -9,7 +9,7 @@ class Contato extends Model
 {
     protected $table = "contatos.contatos";
 
-    protected $fillable = ['nome', 'email', 'descricao', 'foto', 'subcategoria_id', 'categoria_id', 'user_id'];
+    protected $fillable = ['nome', 'email', 'descricao', 'foto', 'subcategoria_id', 'categoria_id', 'user_id', 'telefone'];
 
     protected static function lista_contatos_user(){
         return Contato::where('user_id', Auth::user()->id)

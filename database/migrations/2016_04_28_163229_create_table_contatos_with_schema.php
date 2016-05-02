@@ -20,6 +20,7 @@ class CreateTableContatosWithSchema extends Migration
             $table->increments('id');
             $table->string('nome', 254);
             $table->string('email', 254);
+            $table->string('telefone', 254);
             $table->text("descricao")->nullable();
             $table->string('foto', 254)->nullable();
             $table->integer('categoria_id')->index()->unsigned()->foreign()->references('id')->on('categorias.categorias')->onDelete('set null')->nullable();

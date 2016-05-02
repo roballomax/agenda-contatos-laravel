@@ -22,6 +22,7 @@ Route::post('/ajax/subcategorias_listar', 'AjaxController@subcategorias_listar')
 
 //Rotas de Contato
 Route::get('/contatos', 'ContatoController@index');
+Route::get('/contatos/{contato}', 'ContatoController@mostra_contato');
 Route::post('/contatos/add', 'ContatoController@add');
 Route::get('/contatos/{contato}/edit', 'ContatoController@edit');
 Route::get('/contatos/delete/{contato}', 'ContatoController@delete');

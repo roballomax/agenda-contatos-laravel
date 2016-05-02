@@ -31,6 +31,7 @@ class ContatoController extends Controller
         $this->validate($request, [
            'nome' =>  'required|max:254',
            'email' => 'required|email|max:254',
+           'email' => 'required|max:254',
            'categoria_id' => 'integer',
            'subcategoria_id' => 'integer'
         ]);
@@ -40,6 +41,7 @@ class ContatoController extends Controller
         Contato::create([
             'nome' => $post_data['nome'],
             'email' => $post_data['email'],
+            'telefone' => $post_data['telefone'],
             'descricao' => (!empty($post_data['descricao']) ? $post_data['descricao'] : null),
             'user_id' => Auth::user()->id,
             'categoria_id' => (!empty($post_data['categoria_id']) ? $post_data['categoria_id'] : null),
@@ -62,6 +64,7 @@ class ContatoController extends Controller
 
         $this->validate($request, [
             'nome' =>  'required|max:254',
+            'telefone' =>  'required|max:254',
             'email' => 'required|email|max:254',
             'categoria_id' => 'integer',
             'subcategoria_id' => 'integer'
@@ -72,6 +75,7 @@ class ContatoController extends Controller
         $contato->update([
             'nome' => $patch_data['nome'],
             'email' => $patch_data['email'],
+            'telefone' => $patch_data['telefone'],
             'categoria_id' => (!empty($patch_data['categoria_id']) ? $patch_data['categoria_id'] : null),
             'subcategoria_id' => (!empty($patch_data['subcategoria_id']) ? $patch_data['subcategoria_id'] : null),
             'descricao' => (!empty($patch_data['descricao']) ? $patch_data['descricao'] : null)
@@ -117,6 +121,12 @@ class ContatoController extends Controller
             'foto' => null
         ]);
         return back();
+    }
+
+    public function mostra_contato(Contato $contato){
+        return view('contatos.contato', [
+            'contato' => $contato
+        ]);
     }
 
 }

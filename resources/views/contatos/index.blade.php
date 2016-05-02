@@ -23,6 +23,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-10">
+                                    <label class="control-label col-sm-2" for="email">Telefone:</label>
+                                    <div class="col-sm-10">
+                                        <input type="tel" class="form-control" name="telefone" id="telefone" value="{{old('telefone')}}" placeholder="{{"(48) 0000-0000"}}">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-10">
                                     <label class="control-label col-sm-2" for="categoria">Categoria:</label>
                                     <div class="col-sm-10">
                                         <select name="categoria_id" id="categoria" class="form-control">
@@ -68,7 +74,7 @@
                                 <div class="list-group">
                                     @foreach($contatos as $contato)
                                         <p class="list-group-item">
-                                            {{$contato->nome}}
+                                            <a href="/contatos/{{$contato->id}}">{{$contato->nome}}</a>
                                             <span class="pull-right">
                                                 <a href="/contatos/imagem/{{$contato->id}}">Cadastrar Imagem</a> |
                                                 <a href="/contatos/{{$contato->id}}/edit">Editar</a> |
