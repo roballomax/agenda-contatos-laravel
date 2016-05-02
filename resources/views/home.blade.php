@@ -11,9 +11,9 @@
                         <div class="list-group">
                             <a href="/contatos" class="list-group-item">Gerenciar Contatos</a>
                             <a href="/categorias" class="list-group-item">Gerenciar Categorias</a>
-                            @if(Auth::user()->adm)
+                            @can('acessaUsers', new App\Permissao())
                                 <a href="/users" class="list-group-item">Gerenciar Usuários</a>
-                            @endif
+                            @endcan
                         </div>
                     </div>
                 </div>

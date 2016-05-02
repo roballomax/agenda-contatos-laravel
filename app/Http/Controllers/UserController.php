@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Permissao;
 use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class UserController extends Controller
 {
 
     public function __construct() {
         $this->middleware('auth');
+
+            if (Auth::user()->cannot('acessaUsers', new Permissao())) {
+                abort(403, "Acesso Negado");
+            }
     }
 
     public function index() {

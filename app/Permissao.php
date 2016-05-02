@@ -11,7 +11,7 @@ class Permissao extends Model
 
     protected $fillable = ['nome', 'url', 'descricao'];
 
-    protected static function pega_permissao_pela_url($url){
+    public static function pega_permissao_pela_url($url){
         return Permissao::where('url', $url)
             ->limit(1)
             ->get();

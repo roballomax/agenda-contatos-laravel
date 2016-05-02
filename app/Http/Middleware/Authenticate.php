@@ -28,15 +28,15 @@ class Authenticate
             }
         }
 
-        if(!Auth::user()->adm){
-            $permissao = Permissao::pega_permissao_pela_url(Route::getFacadeRoot()->current()->uri());
-            if(count($permissao) > 0){
-                $acesso_negado = count(Permissoes_user::verifica_permissao(Auth::user()->id, $permissao[0]->id));
-                if($acesso_negado == 1)
-                    abort(403);
-
-            }
-        }
+//        if(!Auth::user()->adm){
+//            $permissao = Permissao::pega_permissao_pela_url(Route::getFacadeRoot()->current()->uri());
+//            if(count($permissao) > 0){
+//                $acesso_negado = count(Permissoes_user::verifica_permissao(Auth::user()->id, $permissao[0]->id));
+//                if($acesso_negado == 1)
+//                    abort(403);
+//
+//            }
+//        }
 
         return $next($request);
     }

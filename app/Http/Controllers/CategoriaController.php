@@ -16,13 +16,17 @@ class CategoriaController extends Controller
 
     public function __construct() {
         $this->middleware('auth');
+
+        $permissao = Permissao::pega_permissao_pela_url(Route::getFacadeRoot()->current()->uri());
+        if(count($permissao) > 0){
+            if (Auth::user()->cannot('verificaPermissao', $permissao[0])) {
+                abort(403, "Acesso Negado");
+            }
+        }
+
     }
 
     public function index(Request $request) {
-
-//        if (Gate::denies('index', Permissao::pega_permissao_pela_url(Route::getFacadeRoot()->current()->uri())[0]->id)) {
-//            abort(403);
-//        }
 
         $categorias = Categoria::lista_todas_do_user();
 
