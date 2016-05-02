@@ -18,6 +18,12 @@ class Categoria extends Model
             ->get();
     }
 
+    protected static function lista_todas_do_user_com_default(){
+        return Categoria::whereIn('user_id', [Auth::user()->id, 1])
+            ->orderBy('nome', 'asc')
+            ->get();
+    }
+
     protected function subcategorias(){
         return$this->hasMany(Subcategoria::class);
     }

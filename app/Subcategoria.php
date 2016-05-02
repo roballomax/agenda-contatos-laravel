@@ -18,6 +18,12 @@ class Subcategoria extends Model
 //            ->get();
 //    }
 
+    protected static function lista_subcategorias($categoria_id){
+        return Subcategoria::where('categoria_id', $categoria_id)
+            ->orderBy('nome', 'asc')
+            ->get();
+    }
+
     protected function categoria(){
         return $this->belongsTo(Categoria::class);
     }

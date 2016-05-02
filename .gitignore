@@ -5,6 +5,7 @@ Homestead.yaml
 Homestead.json
 .env
 .idea
+public/image/contatos/*
 
 
 # Created by https://www.gitignore.io/api/phpstorm,laravel,node,composer

@@ -17,8 +17,18 @@ Route::get('/', function () {
 Route::auth();
 Route::get('/home', 'HomeController@index');
 
+//Rotas de AJAX
+Route::post('/ajax/subcategorias_listar', 'AjaxController@subcategorias_listar');
+
 //Rotas de Contato
 Route::get('/contatos', 'ContatoController@index');
+Route::post('/contatos/add', 'ContatoController@add');
+Route::get('/contatos/{contato}/edit', 'ContatoController@edit');
+Route::get('/contatos/delete/{contato}', 'ContatoController@delete');
+Route::patch('/contatos/update/{contato}', 'ContatoController@update');
+Route::get('/contatos/imagem/{contato}', 'ContatoController@imagem');
+Route::patch('/contatos/imagem/{contato}', 'ContatoController@imagem_cadastrar');
+Route::get('/contatos/imagem/{contato}/delete', 'ContatoController@delete_imagem');
 
 //Rotas de Categorias
 Route::get('/categorias', 'CategoriaController@index');
