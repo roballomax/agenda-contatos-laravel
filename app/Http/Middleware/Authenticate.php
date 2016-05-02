@@ -20,6 +20,14 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        if (Auth::guard($guard)->guest()) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response('Unauthorized.', 401);
+            } else {
+                return redirect()->guest('login');
+            }
+        }
+
         if(!Auth::user()->adm){
             $permissao = Permissao::pega_permissao_pela_url(Route::getFacadeRoot()->current()->uri());
             if(count($permissao) > 0){
@@ -27,14 +35,6 @@ class Authenticate
                 if($acesso_negado == 1)
                     abort(403);
 
-            }
-        }
-
-        if (Auth::guard($guard)->guest()) {
-            if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('login');
             }
         }
 

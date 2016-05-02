@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Categoria;
 use App\Http\Requests\Request;
 use App\Permissao;
 use App\Permissoes_user;
@@ -23,17 +24,19 @@ class CategoriaPolicy
 //        //
 //    }
 
-    public function before($user, $ability)
-    {
-        if (Auth::user()->adm) {
+//    public function before($user, $ability)
+//    {
+//        if (Auth::user()->adm) {
+//
+//            return true;
+//        }
+//    }
 
-            return true;
-        }
-    }
+    public function index(User $user, Categoria $categoria){
+//        $permissionado = count(Permissoes_user::verifica_permissao(Auth::user()->id, $permissao_id));
+//        return ($permissionado == 1 ? false : true);
 
-    public function index($permissao_id){
-        $permissionado = count(Permissoes_user::verifica_permissao(Auth::user()->id, $permissao_id));
-        return ($permissionado == 1 ? false : true);
+        dd($user);
     }
 
 }
