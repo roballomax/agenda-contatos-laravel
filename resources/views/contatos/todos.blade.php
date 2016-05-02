@@ -63,7 +63,7 @@
                             <div class="row">
                                 <div class="list-group">
                                     <div class="list-group-item list-group-item-info">
-                                        Contatos Encontrados :)
+                                        Lista de Contatos
                                     </div>
                                     @if(count($contatos) > 0)
                                         @foreach($contatos as $contato)

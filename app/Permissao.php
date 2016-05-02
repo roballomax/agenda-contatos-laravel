@@ -21,7 +21,7 @@ class Permissao extends Model
                 FROM
                   permissoes.permissoes
                 ORDER BY
-                    nome";
+                    id";
 
         return DB::select($sql,['user_id' => $user_id] );
 //        return DB::connection()->getPdo()->select($sql);
