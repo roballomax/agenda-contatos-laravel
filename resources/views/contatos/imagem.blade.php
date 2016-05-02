@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Imagem do contato - {{$contato->nome}} - <a href="{{url()->to("/contatos")}}">Voltar</a></div>
+                    <div class="panel-heading">Imagem do contato - {{$contato->nome}} - <a href="{{url()->previous()}}">Voltar</a></div>
                     <div class="panel-body">
                         <div class="row">
                             <form method="post" action="/contatos/imagem/{{$contato->id}}" enctype="multipart/form-data">

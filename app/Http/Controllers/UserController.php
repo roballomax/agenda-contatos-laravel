@@ -17,9 +17,11 @@ class UserController extends Controller
     public function __construct() {
         $this->middleware('auth');
 
+        if(!is_null(Auth::user())){
             if (Auth::user()->cannot('acessaUsers', new Permissao())) {
                 abort(403, "Acesso Negado");
             }
+        }
     }
 
     public function index() {
@@ -68,7 +70,7 @@ class UserController extends Controller
 
         $this->validate($patch, [
             'name' => 'required|max:254',
-            'email' => 'required|max:254|email|unique:users'
+            'email' => 'required|max:254|email|unique:users,email,' . $user->id
         ]);
 
         try {

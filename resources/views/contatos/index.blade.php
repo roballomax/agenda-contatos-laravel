@@ -69,22 +69,33 @@
                             </div>
                         @endif
 
-                        @if(!empty($contatos))
-                            <div class="row">
-                                <div class="list-group">
-                                    @foreach($contatos as $contato)
-                                        <p class="list-group-item">
-                                            <a href="/contatos/{{$contato->id}}">{{$contato->nome}}</a>
-                                            <span class="pull-right">
-                                                <a href="/contatos/imagem/{{$contato->id}}">Cadastrar Imagem</a> |
-                                                <a href="/contatos/{{$contato->id}}/edit">Editar</a> |
-                                                <a href="/contatos/delete/{{$contato->id}}">Deletar</a>
-                                            </span>
-                                        </p>
-                                    @endforeach
+                        @can('verificaPermissao', App\Permissao::pega_permissao_pela_url('contatos/todos'))
+                            @if(!empty($contatos))
+                                <div class="row">
+                                    <div class="list-group">
+                                        <a href="/contatos/todos" class="list-group-item list-group-item-info">Ver Todos</a>
+                                        @foreach($contatos as $contato)
+                                            <p class="list-group-item">
+                                                <a href="/contatos/ver_contato/{{$contato->id}}">{{$contato->nome}}</a>
+                                                <span class="pull-right">
+                                                    <a href="/contatos/imagem/{{$contato->id}}">Cadastrar Imagem</a> |
+                                                    <a href="/contatos/{{$contato->id}}/edit">Editar</a> |
+                                                    <a href="/contatos/delete/{{$contato->id}}">Deletar</a>
+                                                </span>
+                                            </p>
+                                        @endforeach
+                                    </div>
                                 </div>
+                            @endif
+                        @else
+                            <div class="row">
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-danger">
+                                        Sem permissão para ver os contatos!
+                                    </li>
+                                </ul>
                             </div>
-                        @endif
+                        @endcan
                     </div>
                 </div>
             </div>

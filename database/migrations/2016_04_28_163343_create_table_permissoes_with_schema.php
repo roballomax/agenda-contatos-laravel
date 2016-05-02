@@ -67,26 +67,26 @@ class CreateTablePermissoesWithSchema extends Migration
         ]);
 
 
-        /***************************************************/
+        /**************************************************
         \App\Permissao::create([
             'nome' => 'Listar users',
             'url' => 'users',
             'descricao' => 'Listar Users'
         ]);
+        */
 
-
-        /***************************************************/
+        /**************************************************
         \App\Permissao::create([
             'nome' => 'Lista Permissoes',
             'url' => 'permissoes/{user}',
             'descricao' => 'Listar Permissões'
         ]);
-
+        */
 
         /***************************************************/
         \App\Permissao::create([
-            'nome' => 'Lista Contatos',
-            'url' => 'contatos',
+            'nome' => 'Listar Contatos',
+            'url' => 'contatos/todos',
             'descricao' => 'Listar Contatos'
         ]);
 

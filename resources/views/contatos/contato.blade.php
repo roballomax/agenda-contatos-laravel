@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Contato - {{$contato->nome}} - <a href="{{url()->to("/contatos")}}">Voltar</a></div>
+                    <div class="panel-heading">Contato - {{$contato->nome}} - <a href="{{url()->previous()}}">Voltar</a></div>
                     <div class="panel-body">
                             <div class="row">
                                 @if(file_exists(substr($contato->foto, 1, strlen($contato->foto))))

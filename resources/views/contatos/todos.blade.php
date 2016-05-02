@@ -5,60 +5,51 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Cadastro de Contato</div>
+                    <div class="panel-heading">Todos os contatos - <a href="{{url()->previous()}}">Voltar</a></div>
                     <div class="panel-body">
-                        <div class="row">
-                            <form method="post" action="/contatos/add">
+                        <div class="row" style="padding: 10px;">
+                            <form method="post" action="/contatos/todos ">
                                 {{csrf_field()}}
-                                <div class="form-group col-sm-10">
-                                    <label class="control-label col-sm-2" for="nome">Nome:</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="nome" id="nome" value="{{old('nome')}}" placeholder="Família...">
+                                <div class="row" style="margin-bottom: 10px">
+                                    <div class="form-group col-lg-3">
+                                        <label for="nome">Nome:</label>
+                                        <input type="text" class="form-control" name="nome" id="nome" value="{{(!empty($post_data['nome']) ? $post_data['nome'] : '')}}" placeholder="Família...">
+                                    </div>
+                                    <div class="form-group col-lg-3">
+                                        <label for="email">E-mail:</label>
+                                        <input type="email" class="form-control" name="email" id="email" value="{{(!empty($post_data['email']) ? $post_data['email'] : '')}}" placeholder="{{"meu.nome@exemplo.com"}}">
+                                    </div>
+                                    <div class="form-group col-lg-3">
+                                        <label for="email">Telefone:</label>
+                                        <input type="tel" class="form-control" name="telefone" id="telefone" value="{{(!empty($post_data['telefone']) ? $post_data['telefone'] : '')}}" placeholder="{{"(48) 0000-0000"}}">
                                     </div>
                                 </div>
-                                <div class="form-group col-sm-10">
-                                    <label class="control-label col-sm-2" for="email">E-mail:</label>
-                                    <div class="col-sm-10">
-                                        <input type="email" class="form-control" name="email" id="email" value="{{old('email')}}" placeholder="{{"meu.nome@exemplo.com"}}">
-                                    </div>
-                                </div>
-                                <div class="form-group col-sm-10">
-                                    <label class="control-label col-sm-2" for="email">Telefone:</label>
-                                    <div class="col-sm-10">
-                                        <input type="tel" class="form-control" name="telefone" id="telefone" value="{{old('telefone')}}" placeholder="{{"(48) 0000-0000"}}">
-                                    </div>
-                                </div>
-                                <div class="form-group col-sm-10">
-                                    <label class="control-label col-sm-2" for="categoria">Categoria:</label>
-                                    <div class="col-sm-10">
+                                <div class="row" style="margin-bottom: 10px">
+                                    <div class="form-group col-lg-3">
+                                        <label for="categoria">Categoria:</label>
                                         <select name="categoria_id" id="categoria" class="form-control">
                                             <option value="">Selecione</option>
                                             @foreach($categorias as $key => $categoria)
-                                                <option value="{{$categoria->id}}" {{ (old("categoria_id") == $categoria->id ? "selected":"") }} >{{$categoria->nome}}</option>
+                                                @if(!empty($post_data['categoria_id']))
+                                                    <option value="{{$categoria->id}}" {{ ($post_data["categoria_id"] == $categoria->id ? "selected":"") }} >{{$categoria->nome}}</option>
+                                                @else
+                                                    <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-group col-sm-10">
-                                    <label class="control-label col-sm-2" for="subcategoria">Subcategoria:</label>
-                                    <div class="col-sm-10">
+                                    <div class="form-group col-lg-3">
+                                        <label for="subcategoria">Subcategoria:</label>
                                         <select name="subcategoria_id" id="subcategoria" class="form-control">
                                             <option value="">Selecione</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group col-sm-10">
-                                    <label class="control-label col-sm-2" for="descricao">Descrição:</label>
-                                    <div class="col-sm-10">
-                                        <textarea class="form-control" rows="5" id="descricao" name="descricao" placeholder="Irmão da fulana...">{{old('descricao')}}</textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-success">Cadastrar</button>
+                                <div class="form-group col-lg-3">
+                                    <button type="submit" class="btn btn-info">Pesquisar</button>
                                 </div>
                             </form>
                         </div>
-
                         @if(count($errors->all()) > 0)
                             <div class="row">
                                 <div class="list-group">
@@ -68,21 +59,43 @@
                                 </div>
                             </div>
                         @endif
-
                         @if(!empty($contatos))
                             <div class="row">
                                 <div class="list-group">
-                                    <a href="/contatos/todos" class="list-group-item list-group-item-info">Ver Todos</a>
-                                    @foreach($contatos as $contato)
-                                        <p class="list-group-item">
-                                            <a href="/contatos/ver_contato/{{$contato->id}}">{{$contato->nome}}</a>
-                                            <span class="pull-right">
-                                                <a href="/contatos/imagem/{{$contato->id}}">Cadastrar Imagem</a> |
-                                                <a href="/contatos/{{$contato->id}}/edit">Editar</a> |
-                                                <a href="/contatos/delete/{{$contato->id}}">Deletar</a>
-                                            </span>
-                                        </p>
-                                    @endforeach
+                                    <div class="list-group-item list-group-item-info">
+                                        Contatos Encontrados :)
+                                    </div>
+                                    @if(count($contatos) > 0)
+                                        @foreach($contatos as $contato)
+                                            <div class="list-group-item" style="overflow: hidden;">
+                                                <a href="/contatos/ver_contato/{{$contato->id}}">
+                                                    <div class="col-lg-8 pull-left">
+                                                        @if(file_exists(substr($contato->foto, 1, strlen($contato->foto))))
+                                                            <div class="col-lg-2">
+                                                                <img src="{{$contato->foto}}" class="img-rounded pull-left" width="50" height="50" />
+                                                            </div>
+                                                        @endif
+                                                        <div class="col-lg-10 center-block">
+                                                            <p class="pull-left">{{$contato->nome}}</p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <div class="col-lg-4 pull-left">
+                                                    <span class="pull-right">
+                                                        <a href="/contatos/imagem/{{$contato->id}}">Cadastrar Imagem</a> |
+                                                        <a href="/contatos/{{$contato->id}}/edit">Editar</a> |
+                                                        <a href="/contatos/delete/{{$contato->id}}">Deletar</a>
+                                                    </span>
+                                                </div>
+                                            </p>
+                                        @endforeach
+                                    @else
+                                        <div class="list-group-item" style="overflow: hidden;">
+                                            <p class="list-group-item list-group-item-danger">
+                                                Nenhum Contato Encontrado :(
+                                            </p>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         @endif

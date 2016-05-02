@@ -19,7 +19,7 @@ class Categoria extends Model
     }
 
     protected static function lista_todas_do_user_com_default(){
-        return Categoria::whereIn('user_id', [Auth::user()->id, 1])
+        return Categoria::whereIn('user_id', [Auth::user()->id, Auth::user()->user_id])
             ->orderBy('nome', 'asc')
             ->get();
     }

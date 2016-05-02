@@ -20,10 +20,12 @@ class ContatoController extends Controller
     public function __construct() {
         $this->middleware('auth');
 
-        $permissao = Permissao::pega_permissao_pela_url(Route::getFacadeRoot()->current()->uri());
-        if(count($permissao) > 0){
-            if (Auth::user()->cannot('verificaPermissao', $permissao[0])) {
-                abort(403, "Acesso Negado");
+        if(!is_null(Auth::user())) {
+            $permissao = Permissao::pega_permissao_pela_url(Route::getFacadeRoot()->current()->uri());
+            if (count($permissao) > 0) {
+                if (Auth::user()->cannot('verificaPermissao', $permissao[0])) {
+                    abort(403, "Acesso Negado");
+                }
             }
         }
 
@@ -31,7 +33,7 @@ class ContatoController extends Controller
 
     public function index() {
         return view('contatos.index', [
-            'contatos' => Contato::lista_contatos_user(),
+            'contatos' => Contato::lista_contatos_user_index(),
             'categorias' => Categoria::lista_todas_do_user_com_default()
         ]);
     }
@@ -40,8 +42,8 @@ class ContatoController extends Controller
 
         $this->validate($request, [
            'nome' =>  'required|max:254',
-           'email' => 'required|email|max:254',
-           'email' => 'required|max:254',
+           'email' => 'email|max:254',
+           'telefone' => 'required|max:254',
            'categoria_id' => 'integer',
            'subcategoria_id' => 'integer'
         ]);
@@ -81,7 +83,7 @@ class ContatoController extends Controller
         $this->validate($request, [
             'nome' =>  'required|max:254',
             'telefone' =>  'required|max:254',
-            'email' => 'required|email|max:254',
+            'email' => 'email|max:254',
             'categoria_id' => 'integer',
             'subcategoria_id' => 'integer'
         ]);
@@ -168,6 +170,33 @@ class ContatoController extends Controller
     public function mostra_contato(Contato $contato){
         return view('contatos.contato', [
             'contato' => $contato
+        ]);
+    }
+
+    public function all(Request $request){
+
+        if($request->method() == "POST"){
+            $this->validate($request, [
+                'nome' =>  'max:254',
+                'email' => 'email|max:254',
+                'telefone' => 'max:254',
+                'categoria_id' => 'integer',
+                'subcategoria_id' => 'integer'
+            ]);
+
+            $post_data = $request->all();
+
+            $contatos = Contato::lista_contatos_user($post_data);
+
+        } else {
+            $contatos = Contato::lista_contatos_user();
+            $post_data = [];
+        }
+
+        return view('contatos.todos', [
+            'contatos' => $contatos,
+            'categorias' => Categoria::lista_todas_do_user_com_default(),
+            'post_data' => $post_data
         ]);
     }
 
