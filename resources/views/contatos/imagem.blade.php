@@ -23,12 +23,6 @@
                                 </div>
                             </form>
                         </div>
-                        @if(file_exists(substr($contato->foto, 1, strlen($contato->foto))))
-                            <a href="/contatos/imagem/{{$contato->id}}/delete">Excluir Imagem</a>
-                            <div class="row">
-                                <img src="{{$contato->foto}}" class="img-thumbnail" width="304" height="236" />
-                            </div>
-                        @endif
                         @if(count($errors->all()) > 0)
                             <div class="row">
                                 <div class="list-group">
@@ -36,6 +30,12 @@
                                         <p class="list-group-item list-group-item-danger">{{$error}}</p>
                                     @endforeach
                                 </div>
+                            </div>
+                        @endif
+                        @if(file_exists(substr($contato->foto, 1, strlen($contato->foto))))
+                            <a href="/contatos/imagem/{{$contato->id}}/delete">Excluir Imagem</a>
+                            <div class="row">
+                                <img src="{{$contato->foto}}" class="img-thumbnail" width="304" height="236" />
                             </div>
                         @endif
                     </div>

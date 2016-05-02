@@ -32,8 +32,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+//        flash_session("Meu pastel é mais barato!", 'info');
+
         return view('home');
     }
 }

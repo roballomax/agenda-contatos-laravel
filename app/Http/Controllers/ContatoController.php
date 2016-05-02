@@ -48,16 +48,22 @@ class ContatoController extends Controller
 
         $post_data = $request->all();
 
-        Contato::create([
-            'nome' => $post_data['nome'],
-            'email' => $post_data['email'],
-            'telefone' => $post_data['telefone'],
-            'descricao' => (!empty($post_data['descricao']) ? $post_data['descricao'] : null),
-            'user_id' => Auth::user()->id,
-            'categoria_id' => (!empty($post_data['categoria_id']) ? $post_data['categoria_id'] : null),
-            'subcategoria_id' => (!empty($post_data['subcategoria_id']) ? $post_data['subcategoria_id'] : null)
-        ]);
+        try {
+            Contato::create([
+                'nome' => $post_data['nome'],
+                'email' => $post_data['email'],
+                'telefone' => $post_data['telefone'],
+                'descricao' => (!empty($post_data['descricao']) ? $post_data['descricao'] : null),
+                'user_id' => Auth::user()->id,
+                'categoria_id' => (!empty($post_data['categoria_id']) ? $post_data['categoria_id'] : null),
+                'subcategoria_id' => (!empty($post_data['subcategoria_id']) ? $post_data['subcategoria_id'] : null)
+            ]);
+            flash_session("Cadastrado com Sucesso :D");
 
+        } catch (Exception $e){
+
+            flash_session("Falha ao Cadastrar :(", 'danger');
+        }
         return back();
     }
 
@@ -81,22 +87,34 @@ class ContatoController extends Controller
         ]);
 
         $patch_data = $request->all();
+        try {
+            $contato->update([
+                'nome' => $patch_data['nome'],
+                'email' => $patch_data['email'],
+                'telefone' => $patch_data['telefone'],
+                'categoria_id' => (!empty($patch_data['categoria_id']) ? $patch_data['categoria_id'] : null),
+                'subcategoria_id' => (!empty($patch_data['subcategoria_id']) ? $patch_data['subcategoria_id'] : null),
+                'descricao' => (!empty($patch_data['descricao']) ? $patch_data['descricao'] : null)
+            ]);
+            flash_session("Atualizado com Sucesso :D");
 
-        $contato->update([
-            'nome' => $patch_data['nome'],
-            'email' => $patch_data['email'],
-            'telefone' => $patch_data['telefone'],
-            'categoria_id' => (!empty($patch_data['categoria_id']) ? $patch_data['categoria_id'] : null),
-            'subcategoria_id' => (!empty($patch_data['subcategoria_id']) ? $patch_data['subcategoria_id'] : null),
-            'descricao' => (!empty($patch_data['descricao']) ? $patch_data['descricao'] : null)
-        ]);
+        } catch (Exception $e){
 
+            flash_session("Falha ao Atualizar :(", 'danger');
+        }
         return redirect('/contatos');
     }
 
     public function delete(Contato $contato){
-        Storage::disk('local')->delete('contatos/' . $contato->id . '.jpg');
-        $contato->delete();
+        try{
+            Storage::disk('local')->delete('contatos/' . $contato->id . '.jpg');
+            $contato->delete();
+            flash_session("Deletado com Sucesso :D");
+
+        } catch (Exception $e){
+
+            flash_session("Falha ao Deletar :(", 'danger');
+        }
         return back();
     }
 
@@ -109,27 +127,41 @@ class ContatoController extends Controller
     public function imagem_cadastrar(Request $request, Contato $contato){
 
         $this->validate($request, [
-            'foto' => 'mimes:jpeg,jpg,png,gif',
+            'foto' => 'mimes:jpeg,jpg,png,gif|required',
         ]);
 
         $patch_data = $request->all();
 
-        $contato->update([
-            'foto' => '/image/contatos/'. $contato->id . '.jpg'
-        ]);
+        try {
+            $contato->update([
+                'foto' => '/image/contatos/'. $contato->id . '.jpg'
+            ]);
 
-        if($request->hasFile('foto')){
-            $request->file('foto')->move('image/contatos/', $contato->id . '.jpg');
+            if($request->hasFile('foto')){
+                $request->file('foto')->move('image/contatos/', $contato->id . '.jpg');
+            }
+
+            flash_session("Cadastrada com Sucesso :D");
+
+        } catch (Exception $e){
+
+            flash_session("Falha ao Cadastrar :(", 'danger');
         }
-
         return back();
     }
 
     public function delete_imagem(Contato $contato){
-        unlink('image/contatos/' . $contato->id . '.jpg');
-        $contato->update([
-            'foto' => null
-        ]);
+        try {
+            unlink('image/contatos/' . $contato->id . '.jpg');
+            $contato->update([
+                'foto' => null
+            ]);
+            flash_session("Deletada com Sucesso :D");
+
+        } catch (Exception $e){
+
+            flash_session("Falha ao Deletar :(", 'danger');
+        }
         return back();
     }
 

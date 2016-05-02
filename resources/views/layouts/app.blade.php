@@ -27,6 +27,17 @@
     </style>
 </head>
 <body id="app-layout">
+
+    @if(Session::has('status-message'))
+        <div class="row" id="notificacao">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-{{Session::get('status')}}">
+                    {{Session::get('status-message')}}
+                </li>
+            </ul>
+        </div>
+    @endif
+
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">

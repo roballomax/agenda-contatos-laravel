@@ -34,18 +34,25 @@ class PermissaoController extends Controller
 
     public function add(Request $request, User $user){
 
-        Permissoes_user::limpa_permissoes($user->id);
+        try {
+            Permissoes_user::limpa_permissoes($user->id);
 
-        foreach($request->all() as $permissao_id => $permissao_valor){
+            foreach($request->all() as $permissao_id => $permissao_valor){
 
-            if($permissao_valor == "false" && $permissao_id != "_token"){
-                Permissoes_user::create([
-                    'user_id' => $user->id,
-                    'permissao_id' => $permissao_id
-                ]);
+                if($permissao_valor == "false" && $permissao_id != "_token"){
+                    Permissoes_user::create([
+                        'user_id' => $user->id,
+                        'permissao_id' => $permissao_id
+                    ]);
+                }
             }
-        }
 
+            flash_session("Cadastradas com Sucesso :D");
+
+        } catch (Exception $e){
+
+            flash_session("Falha ao Cadastrar :(", 'danger');
+        }
         return redirect('/users');
     }
 

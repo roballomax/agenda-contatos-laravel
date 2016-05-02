@@ -29,6 +29,9 @@ $(function(){
        busca_sub_categorias();
     });
 
+    setTimeout(function(){
+        $('#notificacao').slideUp();
+    }, 1500);
 
 });
 //# sourceMappingURL=all.js.map

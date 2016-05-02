@@ -44,11 +44,19 @@ class SubcategoriaController extends Controller
 
         $post_data = $post->all();
 
-        Subcategoria::create([
-            'nome' => $post_data['nome'],
-            'categoria_id' => $categoria_id,
-            'user_id' => Auth::user()->id   
-        ]);
+        try{
+            Subcategoria::create([
+                'nome' => $post_data['nome'],
+                'categoria_id' => $categoria_id,
+                'user_id' => Auth::user()->id
+            ]);
+
+            flash_session("Cadastrado com Sucesso :D");
+
+        } catch (Exception $e){
+
+            flash_session("Falha ao Cadastrar :(", 'danger');
+        }
 
         return back();
 
@@ -68,14 +76,29 @@ class SubcategoriaController extends Controller
             'nome' => 'required|max:254'
         ]);
 
-        $subcategoria->update($patch->all());
+        try{
+            $subcategoria->update($patch->all());
+
+            flash_session("Atualizado com Sucesso :D");
+
+        } catch (Exception $e){
+
+            flash_session("Falha ao Atualizar :(", 'danger');
+        }
 
         return redirect('/subcategorias/' . $subcategoria->categoria->id);
     }
 
     public function delete(Subcategoria $subcategoria){
 
-        $subcategoria->delete();
+        try {
+            $subcategoria->delete();
+            flash_session("Deletado com Sucesso :D");
+
+        } catch (Exception $e){
+
+            flash_session("Falha ao Deletar :(", 'danger');
+        }
         return back();
 
     }

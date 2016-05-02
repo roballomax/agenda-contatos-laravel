@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Mockery\CountValidator\Exception;
 
 class UserController extends Controller
 {
@@ -22,6 +23,7 @@ class UserController extends Controller
     }
 
     public function index() {
+
         return view('users.index', [
             'users' => User::get_all_users_from_logged()
         ]);
@@ -36,14 +38,21 @@ class UserController extends Controller
         ]);
 
         $post_data = $post->all();
+        try {
+            User::create([
+                'name' => $post_data['name'],
+                'email' => $post_data['email'],
+                'password' => bcrypt($post_data['password']),
+                'user_id' => Auth::user()->id,
+                'adm' => false
+            ]);
 
-        User::create([
-            'name' => $post_data['name'],
-            'email' => $post_data['email'],
-            'password' => bcrypt($post_data['password']),
-            'user_id' => Auth::user()->id,
-            'adm' => false
-        ]);
+            flash_session("Cadastrado com Sucesso :D");
+
+        } catch (Exception $e){
+
+            flash_session("Falha ao Cadastrar :(", 'danger');
+        }
 
         return back();
 
@@ -62,13 +71,25 @@ class UserController extends Controller
             'email' => 'required|max:254|email|unique:users'
         ]);
 
-        $user->update($patch->all());
+        try {
+            $user->update($patch->all());
 
+            flash_session("Atualizado com Sucesso :D");
+
+        } catch (Exception $e){
+
+            flash_session("Falha ao Atualizar :(", 'danger');
+        }
         return redirect('/users');
     }
 
     public function delete(User $user){
-        $user->delete();
+        try {
+            $user->delete();
+            flash_session("Deletado com Sucesso :D");
+        } catch (Exception $e){
+            flash_session("Falha ao Deletar :(", 'danger');
+        }
         return back();
     }
 

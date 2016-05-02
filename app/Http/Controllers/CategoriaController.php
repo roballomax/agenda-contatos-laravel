@@ -43,17 +43,31 @@ class CategoriaController extends Controller
 
         $post_data = $post->all();
 
-        Categoria::create([
-            'nome' => $post_data['nome'],
-            'description' => $post_data['descricao'],
-            'user_id' => Auth::user()->id
-        ]);
+        try {
+            Categoria::create([
+                'nome' => $post_data['nome'],
+                'descricao' => $post_data['descricao'],
+                'user_id' => Auth::user()->id
+            ]);
+
+            flash_session("Cadastrado com Sucesso :D");
+
+        } catch (Exception $e){
+
+            flash_session("Falha ao Cadastrar :(", 'danger');
+        }
+
 
         return back();
     }
 
     public function delete(Categoria $categoria){
-        $categoria->delete();
+        try{
+            $categoria->delete();
+            flash_session("Deletado com Sucesso :D");
+        } catch (Exception $e){
+            flash_session("Falha ao Deletar :(", 'danger');
+        }
         return back();
     }
 
@@ -71,10 +85,17 @@ class CategoriaController extends Controller
 
         $patch_data = $patch->all();
 
-        $categoria->update([
-            'nome' => $patch_data['nome'],
-            'descricao' => $patch_data['descricao']
-        ]);
+        try{
+
+            $categoria->update([
+                'nome' => $patch_data['nome'],
+                'descricao' => $patch_data['descricao']
+            ]);
+            flash_session("Atualizado com Sucesso :D");
+
+        } catch (Exception $e){
+            flash_session("Falha ao Atualizar :(", 'danger');
+        }
 
         return redirect('/categorias');
     }
