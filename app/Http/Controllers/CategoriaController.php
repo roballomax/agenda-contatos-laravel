@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Categoria;
+use App\Permissao;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
 
 class CategoriaController extends Controller
 {
@@ -15,7 +18,11 @@ class CategoriaController extends Controller
         $this->middleware('auth');
     }
 
-    public function index() {
+    public function index(Request $request) {
+
+//        if (Gate::denies('index', Permissao::pega_permissao_pela_url(Route::getFacadeRoot()->current()->uri())[0]->id)) {
+//            abort(403);
+//        }
 
         $categorias = Categoria::lista_todas_do_user();
 

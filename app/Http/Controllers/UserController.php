@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function index() {
         return view('users.index', [
             'users' => User::get_all_users_from_logged()

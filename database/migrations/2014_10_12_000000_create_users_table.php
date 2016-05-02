@@ -50,6 +50,14 @@ class CreateUsersTable extends Migration
             'password' => bcrypt('roballomax'),
             'user_id' => 1
         ]);
+
+        \App\User::create([
+            'name' => 'João da Silva',
+            'email' => 'teste@teste.com',
+            'password' => bcrypt('roballomax'),
+            'user_id' => 2,
+            'adm' => false
+        ]);
     }
 
 }

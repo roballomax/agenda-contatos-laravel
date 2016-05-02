@@ -31,4 +31,8 @@ class User extends Authenticatable
             ->get();
     }
 
+    public function permissoes_user(){
+        return $this->hasMany(Permissoes_user::class);
+    }
+
 }

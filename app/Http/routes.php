@@ -53,3 +53,7 @@ Route::get('/users/{user}/edit', 'UserController@edit');
 Route::patch('/users/update/{user}/', 'UserController@update');
 Route::get('/users/delete/{user}', 'UserController@delete');
 
+//Rotas de permissões
+Route::get('/permissoes/{user}', 'PermissaoController@index');
+Route::post('/permissoes/add/{user}', 'PermissaoController@add');
+

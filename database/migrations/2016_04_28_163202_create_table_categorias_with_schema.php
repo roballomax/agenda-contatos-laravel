@@ -41,19 +41,19 @@ class CreateTableCategoriasWithSchema extends Migration
         \App\Categoria::create([
             'nome' => 'Família',
             'descricao' => 'Integrantes da minha família.',
-            'user_id' => 1
+            'user_id' => 2
         ]);
 
         \App\Categoria::create([
             'nome' => 'Amigos',
             'descricao' => 'Amigos pessoais.',
-            'user_id' => 1
+            'user_id' => 2
         ]);
 
         \App\Categoria::create([
             'nome' => 'Trabalho',
             'descricao' => 'Pessoal do trabalho.',
-            'user_id' => 1
+            'user_id' => 2
         ]);
     }
 }

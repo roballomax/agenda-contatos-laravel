@@ -22,6 +22,9 @@ class CreateTablePermissoesWithSchema extends Migration
             $table->text("descricao")->nullable();
             $table->timestamps();
         });
+
+        self::seta_permissoes_iniciais();
+
     }
 
     /**
@@ -33,4 +36,50 @@ class CreateTablePermissoesWithSchema extends Migration
     {
         Schema::dropIfExists('permissoes.permissoes');
     }
+
+    private function seta_permissoes_iniciais(){
+
+        /*****************************************************/
+        \App\Permissao::create([
+            'nome' => 'Listar Categorias',
+            'url' => 'categorias',
+            'descricao' => 'Listar categorias'
+        ]);
+
+
+        /****************************************************/
+        \App\Permissao::create([
+            'nome' => 'Listar subcategorias',
+            'url' => 'subcategorias/{categoria}',
+            'descricao' => 'Listar subcategorias'
+        ]);
+
+
+        /***************************************************/
+        \App\Permissao::create([
+            'nome' => 'Listar users',
+            'url' => 'users',
+            'descricao' => 'Listar Users'
+        ]);
+
+
+        /***************************************************/
+        \App\Permissao::create([
+            'nome' => 'Lista Permissoes',
+            'url' => 'permissoes/{user}',
+            'descricao' => 'Listar Permissões'
+        ]);
+
+
+        /***************************************************/
+        \App\Permissao::create([
+            'nome' => 'Lista Contatos',
+            'url' => 'contatos',
+            'descricao' => 'Listar Contatos'
+        ]);
+
+
+
+    }
+
 }
