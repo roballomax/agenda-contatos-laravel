@@ -24,7 +24,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        //
+
+        $router->pattern('contato', '[0-9]+');
+        $router->pattern('categoria', '[0-9]+');
+        $router->pattern('subcategoria', '[0-9]+');
+        $router->pattern('user', '[0-9]+');
 
         parent::boot($router);
     }
