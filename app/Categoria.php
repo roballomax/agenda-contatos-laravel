@@ -19,13 +19,19 @@ class Categoria extends Model
     }
 
     protected static function lista_todas_do_user_com_default(){
-        return Categoria::whereIn('user_id', [Auth::user()->id, Auth::user()->user_id])
+
+        $users = [Auth::user()->id, Auth::user()->user_id];
+        foreach(Auth::user()->users as $user){
+            $users[] = $user->id;
+        }
+
+        return Categoria::whereIn('user_id', $users)
             ->orderBy('nome', 'asc')
             ->get();
     }
 
     protected function subcategorias(){
-        return$this->hasMany(Subcategoria::class);
+        return $this->hasMany(Subcategoria::class);
     }
 
     protected function user(){

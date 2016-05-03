@@ -35,4 +35,8 @@ class User extends Authenticatable
         return $this->hasMany(Permissoes_user::class);
     }
 
+    public function users(){
+        return $this->hasMany(User::class);
+    }
+
 }

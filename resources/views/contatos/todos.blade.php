@@ -87,7 +87,7 @@
                                                         <a href="/contatos/delete/{{$contato->id}}">Deletar</a>
                                                     </span>
                                                 </div>
-                                            </p>
+                                            </div>
                                         @endforeach
                                     @else
                                         <div class="list-group-item" style="overflow: hidden;">

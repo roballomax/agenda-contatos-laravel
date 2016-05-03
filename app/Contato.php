@@ -13,6 +13,11 @@ class Contato extends Model
 
     protected static function lista_contatos_user($where = null){
 
+        $users = [Auth::user()->id, Auth::user()->user_id];
+        foreach(Auth::user()->users as $user){
+            $users[] = $user->id;
+        }
+
         if(!is_null($where)){
 
             $wheres = [];
@@ -23,8 +28,7 @@ class Contato extends Model
                 $wheres['subcategoria_id'] = $where['subcategoria_id'];
             }
 
-
-            return Contato::whereIn('user_id', [Auth::user()->id, Auth::user()->user_id])
+            return Contato::whereIn('user_id', $users)
                 ->where('nome', 'ILIKE', '%' . $where['nome'] . '%')
                 ->where('email', 'ILIKE', '%' . $where['email'] . '%')
                 ->where('telefone', 'ILIKE', '%' . $where['telefone'] . '%')
@@ -32,25 +36,31 @@ class Contato extends Model
                 ->orderBy('nome', 'asc')
                 ->get();
         } else {
-            return Contato::whereIn('user_id', [Auth::user()->id, Auth::user()->user_id])
+            return Contato::whereIn('user_id', $users)
                 ->orderBy('nome', 'asc')
                 ->get();
         }
     }
 
     protected static function lista_contatos_user_index(){
-        return Contato::whereIn('user_id', [Auth::user()->id, Auth::user()->user_id])
+
+        $users = [Auth::user()->id, Auth::user()->user_id];
+        foreach(Auth::user()->users as $user){
+            $users[] = $user->id;
+        }
+
+        return Contato::whereIn('user_id', $users)
             ->orderBy('nome', 'asc')
             ->limit(4)
             ->get();
     }
 
-    protected static function busca_ultimo_id(){
-        return Contato::where('user_id', Auth::user()->id)
-            ->orderBy('id', 'desc')
-            ->limit(1)
-            ->get();
-    }
+//    protected static function busca_ultimo_id(){
+//        return Contato::where('user_id', Auth::user()->id)
+//            ->orderBy('id', 'desc')
+//            ->limit(1)
+//            ->get();
+//    }
 
     protected function subcategoria(){
         return $this->belongsTo(Subcategoria::class);
