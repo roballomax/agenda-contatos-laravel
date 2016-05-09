@@ -39,4 +39,17 @@ class User extends Authenticatable
         return $this->hasMany(User::class);
     }
 
+    protected static function verifica_filiacao($user_id){
+
+        $users = [Auth::user()->id, Auth::user()->user_id];
+        foreach(Auth::user()->users as $user){
+            $users[] = $user->id;
+        }
+
+        return User::whereIn('user_id', $users)
+            ->where('id', $user_id)
+            ->limit(1)
+            ->get();
+    }
+
 }

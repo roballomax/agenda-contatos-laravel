@@ -65,12 +65,19 @@ class CategoriaController extends Controller
 
     public function delete(Categoria $categoria){
         try{
+
+            if(Auth::user()->cannot('manageCategoria', $categoria)){
+                flash_session("Falha ao Deletar :(", 'danger');
+                return redirect("/categorias");
+            }
+
             $categoria->delete();
             flash_session("Deletado com Sucesso :D");
         } catch (Exception $e){
             flash_session("Falha ao Deletar :(", 'danger');
         }
-        return back();
+
+        return redirect("/categorias");
     }
 
     public function edit(Categoria $categoria){
@@ -80,6 +87,11 @@ class CategoriaController extends Controller
     }
 
     public function update(Request $patch, Categoria $categoria){
+
+        if(Auth::user()->cannot('manageCategoria', $categoria)){
+            flash_session("Falha ao Atualizar :(", 'danger');
+            return redirect("/categorias");
+        }
 
         $this->validate($patch, [
             'nome' => ['required', 'max:254'],

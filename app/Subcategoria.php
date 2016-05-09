@@ -24,6 +24,19 @@ class Subcategoria extends Model
             ->get();
     }
 
+    public static function verifica_filiacao($subcategoria_id){
+
+        $users = [Auth::user()->id, Auth::user()->user_id];
+        foreach(Auth::user()->users as $user){
+            $users[] = $user->id;
+        }
+
+        return Subcategoria::whereIn('user_id', $users)
+            ->where('id', $subcategoria_id)
+            ->limit(1)
+            ->get();
+    }
+
     protected function categoria(){
         return $this->belongsTo(Categoria::class);
     }

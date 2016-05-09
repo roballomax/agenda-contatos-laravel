@@ -29,8 +29,10 @@ class SubcategoriaController extends Controller
 
     public function index(Categoria $categoria){
 
-//        if($categoria->user_id != Auth::user()->id)
-//            return back();
+        if(Auth::user()->cannot('manageCategoria', $categoria)){
+            flash_session("Falha ao Listar :(", 'danger');
+            return redirect('/categorias');
+        }
 
         return view('subcategorias.index', [
             "categoria" => $categoria
@@ -65,6 +67,11 @@ class SubcategoriaController extends Controller
 
     public function edit(Subcategoria $subcategoria) {
 
+        if(Auth::user()->cannot('manageSubcategoria', $subcategoria)){
+            flash_session("Falha ao Abrir Página :(", 'danger');
+            return redirect('/categorias');
+        }
+
         return view('subcategorias.edit', [
             'subcategoria' => $subcategoria
         ]);
@@ -78,6 +85,12 @@ class SubcategoriaController extends Controller
         ]);
 
         try{
+
+            if(Auth::user()->cannot('manageSubcategoria', $subcategoria)){
+                flash_session("Falha ao Atualizar :(", 'danger');
+                return redirect('/categorias');
+            }
+
             $subcategoria->update($patch->all());
 
             flash_session("Atualizado com Sucesso :D");
@@ -93,6 +106,12 @@ class SubcategoriaController extends Controller
     public function delete(Subcategoria $subcategoria){
 
         try {
+
+            if(Auth::user()->cannot('manageSubcategoria', $subcategoria)){
+                flash_session("Falha ao Deletar :(", 'danger');
+                return redirect('/subcategorias/' . $subcategoria->categoria->id);
+            }
+
             $subcategoria->delete();
             flash_session("Deletado com Sucesso :D");
 

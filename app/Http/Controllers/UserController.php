@@ -61,6 +61,12 @@ class UserController extends Controller
     }
 
     public function edit(User $user){
+
+        if(Auth::user()->cannot('manageUser', $user)){
+            flash_session("Falha ao Editar :(", 'danger');
+            return redirect('/users');
+        }
+
         return view('users.edit', [
             'user' => $user
         ]);
@@ -74,6 +80,12 @@ class UserController extends Controller
         ]);
 
         try {
+
+            if(Auth::user()->cannot('manageUser', $user)){
+                flash_session("Falha ao Atualizar :(", 'danger');
+                return redirect('/users');
+            }
+
             $user->update($patch->all());
 
             flash_session("Atualizado com Sucesso :D");
@@ -87,6 +99,12 @@ class UserController extends Controller
 
     public function delete(User $user){
         try {
+
+            if(Auth::user()->cannot('manageUser', $user)){
+                flash_session("Falha ao Deletar :(", 'danger');
+                return redirect('/users');
+            }
+
             $user->delete();
             flash_session("Deletado com Sucesso :D");
         } catch (Exception $e){

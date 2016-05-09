@@ -55,12 +55,18 @@ class Contato extends Model
             ->get();
     }
 
-//    protected static function busca_ultimo_id(){
-//        return Contato::where('user_id', Auth::user()->id)
-//            ->orderBy('id', 'desc')
-//            ->limit(1)
-//            ->get();
-//    }
+    public static function verifica_filiacao($contato_id){
+
+        $users = [Auth::user()->id, Auth::user()->user_id];
+        foreach(Auth::user()->users as $user){
+            $users[] = $user->id;
+        }
+
+        return Contato::whereIn('user_id', $users)
+            ->where('id', $contato_id)
+            ->limit(1)
+            ->get();
+    }
 
     protected function subcategoria(){
         return $this->belongsTo(Subcategoria::class);

@@ -6,11 +6,11 @@ use App\Categoria;
 use App\Contato;
 use App\Permissao;
 use App\Subcategoria;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -90,6 +90,13 @@ class ContatoController extends Controller
 
         $patch_data = $request->all();
         try {
+
+            if(User::user()->cannot('manageContato', $contato)){
+
+                flash_session("Falha ao Atualizar :(", 'danger');
+                return redirect("/contatos");
+            }
+
             $contato->update([
                 'nome' => $patch_data['nome'],
                 'email' => $patch_data['email'],
@@ -109,6 +116,13 @@ class ContatoController extends Controller
 
     public function delete(Contato $contato){
         try{
+
+            if(Auth::user()->cannot('manageContato', $contato)){
+
+                flash_session("Falha ao Deletar :(", 'danger');
+                return redirect("/contatos");
+            }
+
             Storage::disk('local')->delete('contatos/' . $contato->id . '.jpg');
             $contato->delete();
             flash_session("Deletado com Sucesso :D");
@@ -135,6 +149,13 @@ class ContatoController extends Controller
         $patch_data = $request->all();
 
         try {
+
+            if(Auth::user()->cannot('manageContato', $contato)){
+
+                flash_session("Falha ao Cadastrar :(", 'danger');
+                return redirect("/contatos");
+            }
+
             $contato->update([
                 'foto' => '/image/contatos/'. $contato->id . '.jpg'
             ]);
@@ -154,6 +175,13 @@ class ContatoController extends Controller
 
     public function delete_imagem(Contato $contato){
         try {
+
+            if(Auth::user()->cannot('manageContato', $contato)){
+
+                flash_session("Falha ao Deletar :(", 'danger');
+                return redirect("/contatos");
+            }
+
             unlink('image/contatos/' . $contato->id . '.jpg');
             $contato->update([
                 'foto' => null
